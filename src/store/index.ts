@@ -1,7 +1,7 @@
 import { ICreateStore, IReduxAction, IReduxInitialState } from '../types';
-import { initialState, ReducerFunc, reducer, CREATE_NOTE } from './reducer';
+import { ReducerFunc, reducer } from './reducer';
 
-const validateAction = (action: any): void => {
+const validateAction = (action: IReduxAction): void => {
   if(!action || typeof action !== 'object' || Array.isArray(action)) {
     throw new Error('Action must be an object');
   }
@@ -13,18 +13,18 @@ const validateAction = (action: any): void => {
 
 const createStore = (reducer: ReducerFunc): ICreateStore => {
   let state: IReduxInitialState;
-  const subscribers: any[] = [];
+  const subscribers: Function[] = [];
 
   return {
     dispatch: (action: IReduxAction): void => {
       validateAction(action);
       state = reducer(state, action);
-      subscribers.forEach((handler): void => handler())
+      subscribers.forEach((handler: Function): void => handler())
     },
     getState: (): IReduxInitialState => state,
     subscribe: (handler: Function) => {
       subscribers.push(handler);
-      return () => {
+      return (): void => {
         const index  = subscribers.indexOf(handler);
         if(index > 0) {
           subscribers.splice(index, 1);
@@ -32,10 +32,6 @@ const createStore = (reducer: ReducerFunc): ICreateStore => {
       }
     }
   }
-  store.dispatch({
-    type: '@@redux/INIT'
-  });
-  return  store;
 }
 
-export const store = createStore(reducer);
+export const store: ICreateStore = createStore(reducer);

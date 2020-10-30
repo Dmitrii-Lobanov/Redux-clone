@@ -1,16 +1,17 @@
 export interface IReduxInitialState {
-  nextNodeId: number,
-  notes: INote[]
+  nextNodeId: number;
+  notes: INote[];
+  openNoteId: number | null;
 }
 
 export interface INote {
-  id: number,
-  content: string
+  id: number;
+  content: string;
 }
 
 export interface IReduxAction {
   [index: string]: string | number;
-  type: string
+  type: string;
 }
 
 export interface IReducer extends IReduxAction {
@@ -20,7 +21,10 @@ export interface IReducer extends IReduxAction {
 
 export interface ICreateStore {
   dispatch: (action: IReduxAction) => void;
-  getState: () => IReduxInitialState;
+  getState: IGetState;
   subscribe: (handler: Function) => void;
 }
 
+export interface IGetState {
+  (): IReduxInitialState;
+}

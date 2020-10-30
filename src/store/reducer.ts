@@ -2,10 +2,13 @@ import { IReduxAction, IReduxInitialState } from '../types';
 
 export const CREATE_NOTE = 'CREATE_NOTE';
 export const UPDATE_NOTE = 'UPDATE_NOTE';
+export const OPEN_NOTE = 'OPEN_NOTE';
+export const CLOSE_NOTE = 'CLOSE_NOTE';
 
 export const initialState: IReduxInitialState = {
   nextNodeId: 1,
-  notes: []
+  notes: [],
+  openNoteId: null,
 };
 
 export interface ReducerFunc {
@@ -23,6 +26,7 @@ export const reducer = (state = initialState, action: IReduxAction): IReduxIniti
       return {
         ...state,
         nextNodeId: id + 1,
+        openNoteId: id,
         notes: {
           ...state.notes,
           [id]: newNote
@@ -43,16 +47,19 @@ export const reducer = (state = initialState, action: IReduxAction): IReduxIniti
         }
       }
     }
+    case OPEN_NOTE: {
+      return {
+        ...state,
+        openNoteId: Number(action?.id)
+      }
+    }
+    case CLOSE_NOTE: {
+      return {
+        ...state,
+        openNoteId: null
+      }
+    }
     default:
       return state;
   }
 }
-
-// const state0 = reducer(undefined, {type: UPDATE_NOTE, id: 1, content: 'Hello'});
-// const state1 = reducer(state0, {
-//   type: UPDATE_NOTE,
-//   id: 1,
-//   content: "Changed"
-// })
-// console.log('state0', state0);
-// console.log('state1', state1);
