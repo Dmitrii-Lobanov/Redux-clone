@@ -3,6 +3,7 @@ import './App.css';
 import NoteApp from '../components/NoteApp';
 import { CLOSE_NOTE, CREATE_NOTE, initialState, OPEN_NOTE, UPDATE_NOTE } from '../store/reducer';
 import { ICreateStore, IReduxInitialState } from '../types';
+import { connect } from "../hocs/connect";
 
 interface IProps {
   store: ICreateStore;
@@ -58,4 +59,30 @@ const App: React.FC<IProps> = ({ store }): JSX.Element => {
   );
 }
 
-export default App;
+const mapStateToProps = (state: any) => ({
+  notes: state.notes,
+  openNoteId: state.openNoteId
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+  onAddNote: () => dispatch({
+    type: CREATE_NOTE
+  }),
+  onChangeNote: (id: number, content: string) => dispatch({
+    type: UPDATE_NOTE,
+    id,
+    content
+  }),
+  onOpenNote: (id: number) => dispatch({
+    type: OPEN_NOTE,
+    id
+  }),
+  onCloseNote: () => dispatch({
+    type: CLOSE_NOTE
+  })
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
