@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { IReduxInitialState } from './types';
+import { initialState } from './reducer';
 
 declare global {
   interface Window {
@@ -11,14 +12,10 @@ declare global {
   }
 }
 
-const initialState: IReduxInitialState = {
-  nextNodeId: 1,
-  notes: []
-};
 
 window.state = initialState;
 
-export const renderApp = () => {
+export const renderApp = (): void => {
   ReactDOM.render(
     <React.StrictMode>
       <App notes={window.state.notes} />

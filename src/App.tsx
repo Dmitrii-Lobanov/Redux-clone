@@ -2,8 +2,8 @@ import React from 'react';
 import './App.css';
 import { renderApp } from "./index";
 
-const onAddNote = () => {
-  const id = window.state.nextNodeId;
+const onAddNote = (): void => {
+  const id: number = window.state.nextNodeId;
   window.state.notes[id] = {
     id,
     content: ''
