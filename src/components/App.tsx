@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { renderApp } from "./index";
+import { renderApp } from "../index";
 
 const onAddNote = (): void => {
   const id: number = window.state.nextNodeId;

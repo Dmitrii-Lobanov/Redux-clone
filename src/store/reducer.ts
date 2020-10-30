@@ -1,15 +1,18 @@
-import { IReducer, IReduxAction, IReduxInitialState } from './types';
+import { IReduxAction, IReduxInitialState } from '../types';
 
-const CREATE_NOTE = 'CREATE_NOTE';
-const UPDATE_NOTE = 'UPDATE_NOTE';
+export const CREATE_NOTE = 'CREATE_NOTE';
+export const UPDATE_NOTE = 'UPDATE_NOTE';
 
 export const initialState: IReduxInitialState = {
   nextNodeId: 1,
   notes: []
 };
 
+export interface ReducerFunc {
+  (state: IReduxInitialState, action: IReduxAction): IReduxInitialState
+}
 
-const reducer = (state = initialState, action: IReduxAction): IReduxInitialState => {
+export const reducer = (state = initialState, action: IReduxAction): IReduxInitialState => {
   switch(action?.type) {
     case CREATE_NOTE: {
       const id = state.nextNodeId;
@@ -45,11 +48,11 @@ const reducer = (state = initialState, action: IReduxAction): IReduxInitialState
   }
 }
 
-const state0 = reducer(undefined, {type: UPDATE_NOTE, id: 1, content: 'Hello'});
-const state1 = reducer(state0, {
-  type: UPDATE_NOTE,
-  id: 1,
-  content: "Changed"
-})
-console.log('state0', state0);
-console.log('state1', state1);
+// const state0 = reducer(undefined, {type: UPDATE_NOTE, id: 1, content: 'Hello'});
+// const state1 = reducer(state0, {
+//   type: UPDATE_NOTE,
+//   id: 1,
+//   content: "Changed"
+// })
+// console.log('state0', state0);
+// console.log('state1', state1);

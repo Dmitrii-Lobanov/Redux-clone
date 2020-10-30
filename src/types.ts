@@ -17,3 +17,10 @@ export interface IReducer extends IReduxAction {
   id: number;
   content: string;
 }
+
+export interface ICreateStore {
+  dispatch: (action: IReduxAction) => void;
+  getState: () => IReduxInitialState;
+  subscribe: (handler: Function) => void;
+}
+
